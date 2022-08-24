@@ -2,6 +2,7 @@ import { Link, Route, Routes } from 'react-router-dom';
 import React from 'react';
 import Register from './Register';
 import Login from './Login';
+import Profile from './Profile';
 
 function Home() {
   return (
@@ -26,6 +27,12 @@ function Home() {
           path="home"
           element={
             <Home />
+              }
+        />
+        <Route
+          path="profile"
+          element={
+            <Profile />
               }
         />
       </Routes>

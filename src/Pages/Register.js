@@ -36,10 +36,13 @@ function Register() {
       body: JSON.stringify(postData),
     })
       .then((response) => {
-        setIsRegisterSuccess(true);
-        navigate('/home', { replace: true });
-        console.log(response.status);
-        alert(response.status);
+        response.json().then((json) => {
+          console.log(json);
+          setIsRegisterSuccess(true);
+          navigate('/home', { replace: true });
+          console.log(response.status);
+          alert(response.status);
+        });
       }).catch((err) => {
         alert('Failed');
         console.log(err);
