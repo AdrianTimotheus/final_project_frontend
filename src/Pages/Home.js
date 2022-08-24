@@ -1,23 +1,35 @@
-import { Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import React from 'react';
 import Register from './Register';
+import Login from './Login';
 
 function Home() {
   return (
-    <Routes>
-      <Route
-        path="register"
-        element={
-          <Register />
-                    }
-      />
-      <Route
-        path="login"
-        element={
-          <Login />
-                }
-      />
-    </Routes>
+    <>
+      <h1>Joplin</h1>
+      <Link to="/register">Register</Link>
+      <Link to="/login">Login</Link>
+      <Routes>
+        <Route
+          path="/register"
+          element={
+            <Register />
+                  }
+        />
+        <Route
+          path="login"
+          element={
+            <Login />
+                  }
+        />
+        <Route
+          path="home"
+          element={
+            <Home />
+              }
+        />
+      </Routes>
+    </>
   );
 }
 

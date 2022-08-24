@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const [name, setName] = useState('');
@@ -8,7 +8,7 @@ function Register() {
   const [isRegisterSuccess, setIsRegisterSuccess] = useState();
   const [errorMessage, setErrorMessage] = useState('');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -27,7 +27,7 @@ function Register() {
       password,
     };
 
-    fetch('http://localhost:8080/wallets/9009090/transactions', {
+    fetch('http://localhost:8080/register', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -35,10 +35,14 @@ function Register() {
       },
       body: JSON.stringify(postData),
     })
-      .then(() => {
+      .then((response) => {
         setIsRegisterSuccess(true);
-        history.push('/home');
+        navigate('/home', { replace: true });
+        console.log(response.status);
+        alert(response.status);
       }).catch((err) => {
+        alert('Failed');
+        console.log(err);
         setErrorMessage(err);
         setIsRegisterSuccess(false);
       });
@@ -50,19 +54,19 @@ function Register() {
       <form onSubmit={handleRegister} className="container mx-auto d-block w-100">
         <div className="mb-3 mt-3">
           <label htmlFor="name">Name</label>
-          <input id="name" type="email" value={name} onChange={handleNameChange} className="form-control" placeholder="Enter full name" />
+          <input id="name" type="text" value={name} onChange={handleNameChange} className="form-control" placeholder="Enter full name" required />
         </div>
         <div className="mb-3">
           <label htmlFor="email">Email address</label>
-          <input id="email" type="email" value={email} onChange={handleEmailChange} className="form-control" placeholder="Enter email" />
+          <input id="email" type="email" value={email} onChange={handleEmailChange} className="form-control" placeholder="Enter email" required />
         </div>
         <div className="mb-3">
           <label htmlFor="password">Password</label>
-          <input id="password" type="password" value={password} onChange={handlePasswordChange} className="form-control" placeholder="Password" />
+          <input id="password" type="password" value={password} onChange={handlePasswordChange} className="form-control" placeholder="Password" required />
           <small className="form-text text-muted">We will never share your password with anyone else.</small>
         </div>
         <div className="mb-3">
-          <input type="submit" value="Submit" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" />
+          <input type="submit" value="Submit" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal" />
         </div>
       </form>
       <div
