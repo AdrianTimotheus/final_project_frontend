@@ -4,7 +4,7 @@ import Register from './Register';
 import Login from './Login';
 import Profile from './Profile';
 import Home from './Home';
-import Contract from './Contract';
+import Request from './Request';
 
 function Root() {
   // const [token, setToken] = useState('');
@@ -24,13 +24,6 @@ function Root() {
                   }
       />
       <Route
-        path="contract"
-        element={
-          <Contract />
-            // token={token} role={role}
-        }
-      />
-      <Route
         path="profile"
         element={
           <Profile />
@@ -40,6 +33,12 @@ function Root() {
         path="/"
         element={
           <Home />
+            }
+      />
+      <Route
+        path="requests"
+        element={
+          <Request />
             }
       />
     </Routes>

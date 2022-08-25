@@ -5,6 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
+// eslint-disable-next-line import/extensions
+import 'bootstrap/dist/js/bootstrap.min.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

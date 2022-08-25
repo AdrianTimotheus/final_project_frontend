@@ -21,15 +21,6 @@ function NavBar(props) {
           </li>
           <li>
             <Link
-              to="/contract"
-              state={props}
-              style={{ textDecoration: 'none', color: 'black' }}
-            >
-              Contract
-            </Link>
-          </li>
-          <li>
-            <Link
               to="/transaction"
               state={props}
               style={{ textDecoration: 'none', color: 'black' }}
@@ -48,29 +39,11 @@ function NavBar(props) {
           </li>
           <li>
             <Link
-              to="/lending"
+              to="/requests"
               state={props}
               style={{ textDecoration: 'none', color: 'black' }}
             >
-              Lending
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/open_loan"
-              state={props}
-              style={{ textDecoration: 'none', color: 'black' }}
-            >
-              Open Requests
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/my_loan"
-              state={props}
-              style={{ textDecoration: 'none', color: 'black' }}
-            >
-              My Requests
+              Requests
             </Link>
           </li>
         </ul>

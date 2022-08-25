@@ -39,7 +39,7 @@ function Register() {
         response.json().then((json) => {
           console.log(json);
           setIsRegisterSuccess(true);
-          navigate('/home', { replace: true });
+          navigate('/', { replace: true });
           console.log(response.status);
           alert(response.status);
         });

@@ -21,16 +21,9 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/prop-types': 'off',
     'react/jsx-no-useless-fragment': 'off',
-    'jsx-a11y/label-has-associated-control': ['error', {
-      required: {
-        some: ['nesting', 'id'],
-      },
-    }],
-    'jsx-a11y/label-has-for': ['error', {
-      required: {
-        some: ['nesting', 'id'],
-      },
-    }],
+    'no-nested-ternary': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
+    'jsx-a11y/label-has-for': 'off',
   },
   settings: {
     'import/resolver': {
