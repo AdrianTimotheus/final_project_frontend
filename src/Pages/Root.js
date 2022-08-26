@@ -5,6 +5,7 @@ import Login from './Login';
 import Profile from './Profile';
 import Home from './Home';
 import Request from './Request';
+import AdminUser from './AdminUser';
 
 function Root() {
   // const [token, setToken] = useState('');
@@ -39,6 +40,12 @@ function Root() {
         path="requests"
         element={
           <Request />
+            }
+      />
+      <Route
+        path="/admin/users"
+        element={
+          <AdminUser />
             }
       />
     </Routes>

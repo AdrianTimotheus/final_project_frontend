@@ -7,12 +7,13 @@ function Request() {
   const [token, setToken] = useState('');
   const [tenor, setTenor] = useState('1');
   const [amount, setAmount] = useState(0);
-  // const [id, setID] = useState(0);
+  const [id, setID] = useState(0);
   const [role, setRole] = useState('');
   const [usedCredit, setUsedCredit] = useState(0);
   const [creditLimit, setCreditLimit] = useState(0);
   const [creditHealth, setCreditHealth] = useState('');
   const [requestData, setRequestData] = useState([]);
+  const [contractStatus, setContractStatus] = useState('');
 
   useEffect(() => {
     setToken(location.state?.token || '');
@@ -25,14 +26,18 @@ function Request() {
       },
     }).then((response) => {
       response.json().then((json) => {
-        // setID(json.id);
+        setID(json.id);
         setRole(json.role);
         setUsedCredit(json.usedCredit);
         setCreditLimit(json.creditLimit);
         setCreditHealth(json.creditHealth);
+        setContractStatus(json.contractStatus);
       });
     });
-    fetch('http://localhost:8080/pendingloans', {
+  }, []);
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/pendingloans/${id}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${location.state?.token || ''}`,
@@ -44,7 +49,7 @@ function Request() {
         setRequestData([...json]);
       });
     });
-  }, []);
+  }, [id]);
 
   const handleTenor = (event) => {
     setTenor(event.target.value);
@@ -93,6 +98,8 @@ function Request() {
           <a href="login"> login </a>
           first
         </h1>
+      ) : contractStatus === 'Confirmed' ? (
+        <h1>Please confirm your contract first</h1>
       ) : usedCredit === creditLimit ? (
         <h1>You have used up your credit</h1>
       ) : (creditHealth === 'Blocked' ? (
@@ -129,7 +136,7 @@ function Request() {
                       <option value="6">6 months (10% interest)</option>
                       <option value="12">12 months (20% interest)</option>
                     </select>
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="Submit" data-bs-dismiss="modal" />
                   </form>
                 </div>
                 <div className="modal-footer">
@@ -143,6 +150,7 @@ function Request() {
           </div>
         </>
       ))}
+      {token !== '' && (
       <table className="table table-striped table-hover">
         <thead>
           <tr>
@@ -152,15 +160,16 @@ function Request() {
         </thead>
         <tbody>
           {
-          requestData.map((item) => (
-            <tr key={item.id}>
-              <td>{item.tenor}</td>
-              <td>{item.amount}</td>
-            </tr>
-          ))
-        }
+              requestData.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.tenor}</td>
+                  <td>{item.amount}</td>
+                </tr>
+              ))
+            }
         </tbody>
       </table>
+      )}
     </>
   );
 }

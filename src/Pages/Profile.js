@@ -24,7 +24,7 @@ function Profile() {
       id,
       contractStatus: 'Confirmed',
     };
-    fetch(`http://localhost:8080/${id}/contract`, {
+    fetch('http://localhost:8080/contract', {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${location.state?.token || ''}`,
