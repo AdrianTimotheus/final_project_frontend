@@ -7,6 +7,7 @@ import Home from './Home';
 import Request from './Request';
 import AdminUser from './AdminUser';
 import AdminVoucher from './AdminVoucher';
+import AdminRequest from './AdminRequest';
 
 function Root() {
   // const [token, setToken] = useState('');
@@ -53,6 +54,12 @@ function Root() {
         path="/admin/vouchers"
         element={
           <AdminVoucher />
+            }
+      />
+      <Route
+        path="/admin/requests"
+        element={
+          <AdminRequest />
             }
       />
     </Routes>

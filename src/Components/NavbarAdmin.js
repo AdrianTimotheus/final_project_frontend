@@ -46,6 +46,15 @@ function NavBarAdmin(props) {
               Vouchers
             </Link>
           </li>
+          <li>
+            <Link
+              to="/admin/requests"
+              state={props}
+              style={{ textDecoration: 'none', color: 'black' }}
+            >
+              Requests
+            </Link>
+          </li>
         </ul>
       </nav>
     </>

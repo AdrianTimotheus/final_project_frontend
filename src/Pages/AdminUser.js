@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import NavBar from '../Components/Navbar';
+import NavBarAdmin from '../Components/NavbarAdmin';
 
 function AdminUser() {
   const location = useLocation();
@@ -98,7 +98,7 @@ function AdminUser() {
 
   return (
     <>
-      <NavBar token={token} role={role} />
+      <NavBarAdmin token={token} role={role} />
       <div
         className="modal fade"
         id="exampleModal"
