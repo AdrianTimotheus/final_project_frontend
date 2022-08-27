@@ -22,6 +22,7 @@ module.exports = {
     'react/prop-types': 'off',
     'react/jsx-no-useless-fragment': 'off',
     'no-nested-ternary': 'off',
+    'max-len': 'off',
     'jsx-a11y/label-has-associated-control': 'off',
     'jsx-a11y/label-has-for': 'off',
   },

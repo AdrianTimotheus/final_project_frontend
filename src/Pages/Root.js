@@ -8,6 +8,7 @@ import Request from './Request';
 import AdminUser from './AdminUser';
 import AdminVoucher from './AdminVoucher';
 import AdminRequest from './AdminRequest';
+import Installment from './Installment';
 
 function Root() {
   // const [token, setToken] = useState('');
@@ -60,6 +61,12 @@ function Root() {
         path="/admin/requests"
         element={
           <AdminRequest />
+            }
+      />
+      <Route
+        path="/debts"
+        element={
+          <Installment />
             }
       />
     </Routes>

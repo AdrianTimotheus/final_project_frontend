@@ -30,11 +30,11 @@ function NavBar(props) {
           </li>
           <li>
             <Link
-              to="/debt"
+              to="/debts"
               state={props}
               style={{ textDecoration: 'none', color: 'black' }}
             >
-              Debt
+              Installments
             </Link>
           </li>
           <li>
