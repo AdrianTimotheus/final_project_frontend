@@ -21,16 +21,16 @@ function NavBar(props) {
           </li>
           <li>
             <Link
-              to="/transaction"
+              to="/history"
               state={props}
               style={{ textDecoration: 'none', color: 'black' }}
             >
-              Transaction
+              History
             </Link>
           </li>
           <li>
             <Link
-              to="/debts"
+              to="/installments"
               state={props}
               style={{ textDecoration: 'none', color: 'black' }}
             >

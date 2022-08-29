@@ -71,8 +71,8 @@ function AdminUser() {
       id,
       name,
       email,
-      usedCredit,
-      creditLimit,
+      usedCredit: Number(usedCredit),
+      creditLimit: Number(creditLimit),
       creditHealth,
       contractStatus,
     };

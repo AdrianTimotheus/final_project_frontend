@@ -141,7 +141,7 @@ function AdminUser() {
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Remaining Usage</label>
-                  <input type="number" value={remainingUsage} onChange={handleRemainingUsage} required min="1" className="form-control" />
+                  <input type="number" value={remainingUsage} onChange={handleRemainingUsage} required min="0" className="form-control" />
                 </div>
                 <input type="submit" value="Submit" data-bs-dismiss="modal" />
               </form>
@@ -162,6 +162,7 @@ function AdminUser() {
               <th>Voucher Code</th>
               <th>Discount Percentage</th>
               <th>Active Until</th>
+              <th>Remaining Usage</th>
             </tr>
           </thead>
           <tbody>
@@ -175,7 +176,7 @@ function AdminUser() {
                             <td>{voucher.remainingUsage}</td>
                             <button
                               type="button"
-                              className="btn btn-primary"
+                              className="btn"
                               onClick={(e) => setVoucherStates(e, voucher, index)}
                               data-bs-toggle="modal"
                               data-bs-target="#exampleModal"

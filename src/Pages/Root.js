@@ -9,6 +9,8 @@ import AdminUser from './AdminUser';
 import AdminVoucher from './AdminVoucher';
 import AdminRequest from './AdminRequest';
 import Installment from './Installment';
+import History from './History';
+import AdminTransaction from './AdminTransaction';
 
 function Root() {
   // const [token, setToken] = useState('');
@@ -64,9 +66,21 @@ function Root() {
             }
       />
       <Route
-        path="/debts"
+        path="/installments"
         element={
           <Installment />
+            }
+      />
+      <Route
+        path="/history"
+        element={
+          <History />
+            }
+      />
+      <Route
+        path="/admin/transactions"
+        element={
+          <AdminTransaction />
             }
       />
     </Routes>

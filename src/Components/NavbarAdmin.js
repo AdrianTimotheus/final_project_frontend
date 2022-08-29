@@ -25,7 +25,7 @@ function NavBarAdmin(props) {
               state={props}
               style={{ textDecoration: 'none', color: 'black' }}
             >
-              Transactions
+              All Transactions
             </Link>
           </li>
           <li>

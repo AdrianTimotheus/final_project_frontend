@@ -26,7 +26,7 @@ function Installment() {
     console.log(location.state.token);
     setToken(location.state?.token || '');
     setRole('User');
-    fetch('http://localhost:8080/installment', {
+    fetch('http://localhost:8080/unpaidinstallment', {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${location.state?.token || ''}`,
@@ -58,15 +58,25 @@ function Installment() {
   const handleVoucherIdx = (event) => {
     // setSelectedVoucher(event.target.value);
     setVoucherIdx(event.target.value);
+    setCalculatedAmount((installments[installmentIdx].amount
+            + (now.diff(installments[installmentIdx].dueDate, 'days') > 0
+              ? 5000 * now.diff(installments[installmentIdx].dueDate, 'days')
+              : 0)
+    )
+        * (1 - (vouchers[event.target.value].discountPercentage / 100)));
   };
 
   const showPayModal = (event, index, item) => {
-    setCalculatedAmount(item.amount + (now.diff(item.dueDate, 'days') > 0 ? 5000 * now.diff(item.dueDate, 'days') : 0));
+    setCalculatedAmount((item.amount
+        + (now.diff(item.dueDate, 'days') > 0
+          ? 5000 * now.diff(item.dueDate, 'days')
+          : 0)
+    )
+        * (1 - (vouchers[voucherIdx].discountPercentage / 100)));
     setInstallmentID(item.id);
     setLoanID(item.loanID);
     setBorrowerID(item.borrowerID);
     setInstallmentIdx(index);
-    console.log(installmentID, loanID, borrowerID);
   };
 
   const handlePayment = (event) => {
@@ -135,6 +145,7 @@ function Installment() {
       paymentDate: now,
       discountID: updatedVouchers[voucherIdx].id,
       borrowerID,
+      amount: calculatedAmount,
     };
 
     fetch('http://localhost:8080/payment', {
@@ -192,7 +203,9 @@ function Installment() {
           <thead>
             <tr>
               <th>ID</th>
+              <th>Loan ID</th>
               <th>Due Date</th>
+              <th>Tenor Number</th>
               <th>Amount</th>
             </tr>
           </thead>
@@ -201,11 +214,13 @@ function Installment() {
               installments.map((item, index) => (
                 <tr key={item.id}>
                   <td>{item.id}</td>
+                  <td>{item.loanID}</td>
                   <td>{item.dueDate}</td>
-                  <td>{item.amount + (now.diff(item.dueDate, 'days') > 0 ? 5000 * now.diff(item.dueDate, 'days') : 0) }</td>
+                  <td>{item.tenorNumber}</td>
+                  <td>{item.amount}</td>
                   <button
                     type="button"
-                    className="btn btn-primary"
+                    className="btn"
                     onClick={(e) => showPayModal(e, index, item)}
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
