@@ -48,8 +48,8 @@ function Installment() {
       },
     }).then((response) => {
       response.json().then((json) => {
-        json.filter((item) => item.remainingUsage > 0 && moment(item.activeUntil) > now);
-        setVouchers([...json]);
+        const filtered = json.filter((item) => item.remainingUsage > 0 && moment(item.activeUntil) > now);
+        setVouchers([...filtered]);
         // console.log(json);
       });
     });
@@ -111,7 +111,9 @@ function Installment() {
       },
       body: JSON.stringify(updatedVoucher),
     }).then((response) => {
-      console.log(response);
+      response.json().then((json) => {
+        console.log(json);
+      });
     });
 
     // PATCH ke /installment, set isPaid true berdasarkan debt idnya / loan idnya + current tenor
@@ -174,7 +176,7 @@ function Installment() {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+              <h5 className="modal-title" id="exampleModalLabel">Pay Installment</h5>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
             </div>
             <div className="modal-body">

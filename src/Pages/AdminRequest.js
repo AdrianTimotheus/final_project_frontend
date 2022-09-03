@@ -71,7 +71,7 @@ function AdminRequest() {
                   <td>{item.amount}</td>
                   <button
                     type="button"
-                    className="btn btn-primary"
+                    className="btn"
                     onClick={(e) => acceptLoan(e, index, item)}
                   >
                     Accept Loan

@@ -66,10 +66,6 @@ function Request() {
       loanStatus: 'Pending',
     };
 
-    console.log(amount);
-    console.log(tenor);
-    console.log(reqData);
-
     fetch('http://localhost:8080/loan', {
       method: 'POST',
       headers: {
@@ -82,6 +78,7 @@ function Request() {
       .then((response) => {
         response.json().then((json) => {
           setRequestData([...requestData, json]);
+          alert('Request success');
         });
       }).catch((err) => {
         alert('Failed');
@@ -98,14 +95,27 @@ function Request() {
           <a href="login"> login </a>
           first
         </h1>
-      ) : contractStatus === 'Confirmed' ? (
-        <h1>Please confirm your contract first</h1>
+      ) : contractStatus !== 'Confirmed' ? (
+        <>
+          <NavBar token={token} role={role} />
+          <h1>Please confirm your contract first</h1>
+        </>
+
       ) : usedCredit === creditLimit ? (
-        <h1>You have used up your credit</h1>
+        <>
+          <NavBar token={token} role={role} />
+          <h1>You have used up your credit</h1>
+        </>
       ) : (creditHealth === 'Blocked' ? (
-        <h1>Please pay your debt first</h1>
+        <>
+          <NavBar token={token} role={role} />
+          <h1>Please pay your debt first</h1>
+        </>
       ) : usedCredit > 0.8 * creditLimit && creditHealth === 'Warning' ? (
-        <p>Credit: warning, you can still request loan if you pay your debt first</p>
+        <>
+          <NavBar token={token} role={role} />
+          <p>Credit: warning, you can still request loan if you pay your debt first</p>
+        </>
       ) : (
         <>
           <NavBar token={token} role={role} />
@@ -119,7 +129,7 @@ function Request() {
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                  <h5 className="modal-title" id="exampleModalLabel">Request Loan</h5>
                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
                 </div>
                 <div className="modal-body">
@@ -136,7 +146,7 @@ function Request() {
                       <option value="6">6 months (10% interest)</option>
                       <option value="12">12 months (20% interest)</option>
                     </select>
-                    <input type="submit" value="Submit" data-bs-dismiss="modal" />
+                    <input type="submit" value="Submit" />
                   </form>
                 </div>
                 <div className="modal-footer">
@@ -148,18 +158,15 @@ function Request() {
           <div className="position-absolute bottom-0 end-0">
             <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Loan Request</button>
           </div>
-        </>
-      ))}
-      {token !== '' && (
-      <table className="table table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Tenor</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
+          <table className="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Tenor</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
               requestData.map((item) => (
                 <tr key={item.id}>
                   <td>{item.tenor}</td>
@@ -167,9 +174,10 @@ function Request() {
                 </tr>
               ))
             }
-        </tbody>
-      </table>
-      )}
+            </tbody>
+          </table>
+        </>
+      ))}
     </>
   );
 }

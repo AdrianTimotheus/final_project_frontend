@@ -91,6 +91,7 @@ function AdminUser() {
       body: JSON.stringify(updatedUserData),
     }).then((response) => {
       console.log(response);
+      alert('User updated');
     });
 
     event.preventDefault();
@@ -109,7 +110,7 @@ function AdminUser() {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+              <h5 className="modal-title" id="exampleModalLabel">Edit User</h5>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
             </div>
             <div className="modal-body">
@@ -141,7 +142,7 @@ function AdminUser() {
                   <option value="Delivered">Contract is being delivered</option>
                   <option value="Received">Contract received by user</option>
                 </select>
-                <input type="submit" value="Submit" data-bs-dismiss="modal" />
+                <input type="submit" value="Submit" />
               </form>
             </div>
             <div className="modal-footer">
@@ -176,7 +177,7 @@ function AdminUser() {
                   <td>{user.contractStatus}</td>
                   <button
                     type="button"
-                    className="btn btn-primary"
+                    className="btn"
                     onClick={(e) => setUserStates(e, user, index)}
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"

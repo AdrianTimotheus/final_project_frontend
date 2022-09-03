@@ -101,7 +101,10 @@ function AdminUser() {
     }).then((response) => {
       response.json().then((json) => {
         if (isNew) {
+          alert('Voucher Created');
           setVouchers([...vouchers, json]);
+        } else {
+          alert('Voucher Updated');
         }
       });
     });
@@ -122,7 +125,7 @@ function AdminUser() {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+              <h5 className="modal-title" id="exampleModalLabel">Edit Voucher</h5>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
             </div>
             <div className="modal-body">
@@ -137,13 +140,13 @@ function AdminUser() {
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Active Until</label>
-                  <input type="date" value={activeUntil} onChange={handleActiveUntil} required min={todayDate} className="form-control" />
+                  <input type="date" value={activeUntil} onChange={handleActiveUntil} min={todayDate} className="form-control" />
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Remaining Usage</label>
                   <input type="number" value={remainingUsage} onChange={handleRemainingUsage} required min="0" className="form-control" />
                 </div>
-                <input type="submit" value="Submit" data-bs-dismiss="modal" />
+                <input type="submit" value="Submit" />
               </form>
             </div>
             <div className="modal-footer">
