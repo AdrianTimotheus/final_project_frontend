@@ -15,9 +15,7 @@ function AdminUser() {
   const [contractStatus, setContractStatus] = useState('');
   const [email, setEmail] = useState('');
   const [idx, setIdx] = useState(0);
-
-  console.log(creditHealth);
-  console.log(contractStatus);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     setToken(location.state?.token || '');
@@ -64,6 +62,28 @@ function AdminUser() {
   };
   const handleContractStatus = (event) => {
     setContractStatus(event.target.value);
+  };
+
+  const handleSearchText = (event) => {
+    setSearchText(event.target.value);
+  };
+
+  const handleSearchSubmit = (event) => {
+    fetch(`http://localhost:8080/users?${new URLSearchParams({
+      s: searchText,
+    })}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${location.state?.token || ''}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then((response) => {
+      response.json().then((json) => {
+        setUsers([...json]);
+      });
+    });
+    event.preventDefault();
   };
 
   const handleSubmit = (event) => {
@@ -152,6 +172,13 @@ function AdminUser() {
         </div>
       </div>
       {token !== '' && (
+      <>
+        <div className="d-flex justify-content-around">
+          <form onSubmit={handleSearchSubmit}>
+            <input type="text" value={searchText} onChange={handleSearchText} />
+            <input type="submit" value="Search" />
+          </form>
+        </div>
         <table className="table table-striped table-hover">
           <thead>
             <tr>
@@ -189,6 +216,7 @@ function AdminUser() {
           }
           </tbody>
         </table>
+      </>
       )}
     </>
   );

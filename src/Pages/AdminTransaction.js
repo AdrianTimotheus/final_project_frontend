@@ -14,6 +14,17 @@ function AdminTransaction() {
   const [sortBy, setSortBy] = useState('date');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
+  const [dueDate, setDueDate] = useState();
+  const [installmentID, setInstallmentID] = useState(0);
+  const [installmentIdx, setInstallmentIdx] = useState(0);
+
+  const today = new Date();
+  const todayDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+
+  const handleDueDate = (event) => {
+    setDueDate(event.target.value);
+    console.log(dueDate);
+  };
 
   const handleTransactionType = (event) => {
     setTransactionType(event.target.value);
@@ -214,6 +225,36 @@ function AdminTransaction() {
     }
   }, [currentPage, transactionType]);
 
+  const changeDueDate = (event) => {
+    const patchData = {
+      id: installmentID,
+      dueDate: new Date(`${dueDate} 07:00:01`),
+    };
+
+    const updatedInstallments = installments.slice();
+    updatedInstallments[installmentIdx].dueDate = dueDate;
+    setInstallments([...updatedInstallments]);
+
+    fetch('http://localhost:8080/installment', {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${location.state?.token || ''}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(patchData),
+    }).then((response) => {
+      console.log(response);
+    });
+    event.preventDefault();
+  };
+
+  const setInstallmentStates = (event, index, item) => {
+    setInstallmentID(item.id);
+    setDueDate(item.dueDate);
+    setInstallmentIdx(index);
+  };
+
   return (
     <>
       {token === '' ? (
@@ -299,21 +340,50 @@ function AdminTransaction() {
           </table>
           ) }
           {transactionType === 'Installments' && (
-          <table className="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Loan ID</th>
-                <th>Borrower ID</th>
-                <th>Due Date</th>
-                <th>Tenor Number</th>
-                <th>Amount</th>
-                <th>Paid</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                installments.map((item) => (
+          <>
+            <div
+              className="modal fade"
+              id="exampleModal"
+              tabIndex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLabel">Edit Due Date</h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                  </div>
+                  <div className="modal-body">
+                    <form onSubmit={changeDueDate} className="container mx-auto d-block w-100">
+                      <div className="mb-3">
+                        <label className="form-label">Due Date</label>
+                        <input type="date" value={dueDate} onChange={handleDueDate} min={todayDate} className="form-control" />
+                      </div>
+                      <input type="submit" value="Submit" />
+                    </form>
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <table className="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Loan ID</th>
+                  <th>Borrower ID</th>
+                  <th>Due Date</th>
+                  <th>Tenor Number</th>
+                  <th>Amount</th>
+                  <th>Paid</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                installments.map((item, index) => (
                   <tr key={item.id}>
                     <td>{item.id}</td>
                     <td>{item.loanID}</td>
@@ -322,11 +392,23 @@ function AdminTransaction() {
                     <td>{item.tenorNumber}</td>
                     <td>{item.amount}</td>
                     <td>{item.isPaid ? 'Yes' : 'No'}</td>
+                    <td>
+                      <button
+                        type="button"
+                        className="btn"
+                        onClick={(e) => setInstallmentStates(e, index, item)}
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                      >
+                        Edit
+                      </button>
+                    </td>
                   </tr>
                 ))
               }
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </>
           ) }
           {currentPage !== 1 && (
           <button onClick={previousPage} type="button">Previous</button>

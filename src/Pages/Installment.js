@@ -59,8 +59,8 @@ function Installment() {
     // setSelectedVoucher(event.target.value);
     setVoucherIdx(event.target.value);
     setCalculatedAmount((installments[installmentIdx].amount
-            + (now.diff(installments[installmentIdx].dueDate, 'days') > 0
-              ? 5000 * now.diff(installments[installmentIdx].dueDate, 'days')
+            + (now.diff(installments[installmentIdx].dueDate, 'minute') > 0
+              ? 5000 * (now.diff(installments[installmentIdx].dueDate, 'days') + 1)
               : 0)
     )
         * (1 - (vouchers[event.target.value].discountPercentage / 100)));
@@ -68,8 +68,8 @@ function Installment() {
 
   const showPayModal = (event, index, item) => {
     setCalculatedAmount((item.amount
-        + (now.diff(item.dueDate, 'days') > 0
-          ? 5000 * now.diff(item.dueDate, 'days')
+        + (now.diff(item.dueDate, 'minute') > 0
+          ? 5000 * (now.diff(item.dueDate, 'days') + 1)
           : 0)
     )
         * (1 - (vouchers[voucherIdx].discountPercentage / 100)));
@@ -85,7 +85,6 @@ function Installment() {
     // apa aja yang harus dilakuin?
     // rombak state si vouchers, dapetin indexnya, kurangin quantitynya
     const updatedVouchers = vouchers.slice();
-    console.log(voucherIdx);
     updatedVouchers[voucherIdx].remainingUsage -= 1;
     setVouchers([...updatedVouchers]);
     // console.log(vouchers);
